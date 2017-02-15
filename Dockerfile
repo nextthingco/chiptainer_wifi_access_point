@@ -14,6 +14,6 @@ RUN apk update && apk add dnsmasq && apk add hostapd && apk add nano && apk add 
 	printf "interface=wlan1\ndriver=nl80211\nssid=myCHIPAccessPoint\nchannel=1\nctrl_interface=/var/run/hostapd" > /etc/hostapd/hostapd.conf
 
 
-CMD ["/sbin/ifconfig","wlan1","172.20.0.1"]
-CMD ["/usr/sbin/dnsmasq","-C","/etc/dnsmasq.d/access_point.conf"]
-CMD ["/usr/sbin/hostapd","/etc/hostapd/hostapd.conf"]
+CMD ["/bin/sh","-c","/sbin/ifconfig","wlan1","172.20.0.1"]
+CMD ["/bin/sh","-c","/usr/sbin/dnsmasq","/etc/dnsmasq.d/access_point.conf"]
+CMD ["/bin/sh","-c","/usr/sbin/hostapd","/etc/hostapd/hostapd.conf","-B"]
