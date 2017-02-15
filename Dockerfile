@@ -1,7 +1,7 @@
 # Base off the Docker container that includes Alpine for installing packages.
 FROM ntc-registry.githost.io/nextthingco/chiptainer_alpine
 
-COPY doStartup.sh /
+COPY doStartup.sh /root/doStartup.sh
 
 RUN apk update && apk add dnsmasq && apk add hostapd && apk add nano && apk add openrc && apk add dhcpcd && \
 	mkdir -p  "/etc/dnsmasq.d" && \
@@ -16,4 +16,4 @@ RUN apk update && apk add dnsmasq && apk add hostapd && apk add nano && apk add 
 	printf "interface=wlan1\ndriver=nl80211\nssid=myCHIPAccessPoint\nchannel=1\nctrl_interface=/var/run/hostapd" > /etc/hostapd/hostapd.conf
 
 
-CMD ["/bin/sh","-c","/doStartup.sh"]
+CMD ["/bin/sh","-c","/root/doStartup.sh"]
