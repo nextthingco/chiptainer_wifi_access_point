@@ -18,7 +18,7 @@ RUN apk update && apk add dnsmasq && apk add hostapd && apk add nano && apk add 
 ENTRYPOINT ifconfig wlan1 172.20.0.1 && \
 	dnsmasq -C /etc/dnsmasq.d/access_point.conf && \
 	hostapd -B /etc/hostapd/hostapd.conf && \
-	echo "******************************************************" && \
-	echo "Access point $ACCESS_POINT_NAME is now up and running!" && \
-	echo "******************************************************" && \
+	echo "***********************************" && \
+	echo "Access point is now up and running!" && \
+	echo "***********************************" && \
 	/bin/sh
