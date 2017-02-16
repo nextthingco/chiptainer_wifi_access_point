@@ -12,15 +12,14 @@ RUN apk update && \
 	apk add dhcpcd && \
 	
 	# Configure the various DNS and network interface settings.
-	mkdir -p  "/etc/dnsmasq.d" && \
-	printf "interface=wlan1\nbind-interfaces\nexcept-interface=wlan0,lo\ndhcp-range=172.20.0.100,172.20.0.250,1h" > /etc/dnsmasq.d/access_point.conf && \
+	mkdir -p  "/accesspoint_conf" && \
+	printf "interface=wlan1\nbind-interfaces\nexcept-interface=wlan0,lo\ndhcp-range=172.20.0.100,172.20.0.250,1h" > /accesspoint_conf/access_point.conf && \
 	printf "auto lo\niface lo inet loopback\n\nsource-directory /etc/network/interfaces.d\nauto wlan1\niface wlan1 inet static\n  address 172.20.0.1\n  netmask 255.255.255.0" > /etc/network/interfaces && \
-	mkdir -p "/etc/hostapd/" && \
-	printf "interface=wlan1\ndriver=nl80211\nssid=$ACCESS_POINT_NAME\nchannel=1\nctrl_interface=/var/run/hostapd" > /etc/hostapd/hostapd.conf
+	printf "interface=wlan1\ndriver=nl80211\nssid=$ACCESS_POINT_NAME\nchannel=1\nctrl_interface=/var/run/hostapd" > /accesspoint_conf/hostapd.conf
 
 ENTRYPOINT ifconfig wlan1 172.20.0.1 && \
-	dnsmasq -C /etc/dnsmasq.d/access_point.conf && \
-	hostapd -B /etc/hostapd/hostapd.conf && \
+	dnsmasq -C /accesspoint_conf/access_point.conf && \
+	hostapd -B /accesspoint_conf/hostapd.conf && \
 	echo "***********************************" && \
 	echo "Access point is now up and running!" && \
 	echo "***********************************" && \
