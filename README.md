@@ -23,3 +23,5 @@ docker run --privileged --net=host -it ntc-registry.githost.io/nextthingco/chipt
 ```
 
 You should now see a wifi access point called "myCHIPAccessPoint".
+
+**Note:** The access point should be available until you reboot. If you exit the Docker container without rebooting, the access point will still be available, but users most likely won't be able to obtain an IP address from the host.
