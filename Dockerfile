@@ -1,15 +1,13 @@
 # Base off the Docker container that includes Alpine for installing packages.
 FROM ntc-registry.githost.io/nextthingco/chiptainer_alpine
 
+LABEL architecture="ARMv7"
+
 # Set an argument for the default name of our access point.
 # Users can define this argument during the Docker build process if they wish.
 ARG ACCESS_POINT_NAME="myCHIPAccessPoint"
 
-RUN apk update && \
-	apk add dnsmasq && \
-	apk add hostapd && \
-	apk add openrc && \
-	apk add dhcpcd && \
+RUN apk add --update --no-cache dnsmasq hostapd openrc dhcpcd && \
 	
 	# Configure the various DNS and network interface settings.
 	mkdir -p  "/accesspoint_conf" && \
